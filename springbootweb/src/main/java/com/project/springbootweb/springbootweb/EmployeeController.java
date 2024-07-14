@@ -1,9 +1,11 @@
 package com.project.springbootweb.springbootweb;
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/employee")
@@ -16,8 +18,9 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public String createNewEmployee(@RequestBody @Valid EmployeeDTO inputEmployee){
-        return employeeService.createNewEmployee(inputEmployee);
+    public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody @Valid EmployeeDTO inputEmployee){
+        EmployeeDTO savedEmployee = employeeService.createNewEmployee(inputEmployee);
+        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -28,8 +31,11 @@ public class EmployeeController {
 
 
     @GetMapping(path = "/{employeeId}")
-    public String getEmployeeById(@PathVariable(name = "employeeId") Long id){
-        return employeeService.getEmployeeById(id);
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable(name = "employeeId") Long id){
+        Optional<EmployeeDTO> employeeDTO = employeeService.getEmployeeById(id);
+        return employeeDTO
+                .map(employeeDTO1 -> ResponseEntity.ok(employeeDTO1))
+                .orElseThrow( () -> new ResourceNotFoundException("Employee not found with id: " + id));
     }
 
     @PutMapping(path = "/{employeeId}")

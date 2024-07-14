@@ -8,24 +8,28 @@ import java.util.*;
 @Service
 public class EmployeeService {
 
-//    private final ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    // later complete the Service layer constructor
-    public EmployeeService(){
+    private final EmployeeRepository employeeRepository;
 
+    public EmployeeService(EmployeeRepository employeeRepository, ModelMapper modelMapper){
+        this.employeeRepository = employeeRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public String createNewEmployee(EmployeeDTO inputEmployee){
-        return "Service.createNewEmployee";
+    public EmployeeDTO createNewEmployee(EmployeeDTO inputEmployee){
+        EmployeeEntity toSaveEntity = modelMapper.map(inputEmployee, EmployeeEntity.class);
+        EmployeeEntity savedEmployeeEntity = employeeRepository.save(toSaveEntity);
+        return modelMapper.map(savedEmployeeEntity, EmployeeDTO.class);
     }
 
     public String getAllEmployees(){
         return "Service.getAllEmployees";
     }
 
-    public String getEmployeeById(Long id){
+    public Optional<EmployeeDTO> getEmployeeById(Long id){
 
-        return "Service.getEmployeeById";
+        return employeeRepository.findById(id).map(employeeEntity -> modelMapper.map(employeeEntity, EmployeeDTO.class));
     }
 
 

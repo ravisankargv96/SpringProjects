@@ -9,5 +9,7 @@ Project Building:
         a. Adding Service layer, Ignoring the Repository/Entity layer/Data access Object (DAO) layer.
         It's a Service layer Prototype
             i. Later complete the Service layer constructor
-        b. Commit the work, before going to next phase, if swagger is working
-        b. Implement One API end-to-end (Create, itself). Then go with rest of 5.
+        b. Implement One API end-to-end (Create, GetEmployeeId). Then go with rest of 4.
+            i. Implementing Creating & getting by employeeId
+            ii. Working Create & GetId APIs
+            iii. Commiting the changes
