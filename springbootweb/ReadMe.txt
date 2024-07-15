@@ -16,3 +16,4 @@ Project Building:
 			iv. Write test cases (inProgress).
 Pending:
 	1. Update with Test cases
+	2. Complete from 2.6 Classes
